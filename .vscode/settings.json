@@ -1,0 +1,7 @@
+{
+  "files.autoSave": "afterDelay",
+  "workbench.localHistory.mergeWindow": 1000,
+  "editor.formatOnSave": false,
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
+}
