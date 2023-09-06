@@ -1,3 +1,9 @@
 from django.contrib import admin
+from professional.models import Professional
 
-# Register your models here.
+
+class ProfessionalAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Professional, ProfessionalAdmin)
