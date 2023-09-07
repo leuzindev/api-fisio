@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from account.views import UserViewSet
+from account.views import UserViewSet, UserMeRetrieveAPIView
 
 urlpatterns = [
-	path('users', UserViewSet.as_view({
+	path('accounts/me', UserMeRetrieveAPIView.as_view()),
+	path('accounts', UserViewSet.as_view({
 		'get' : 'list', 
 		'post': 'create'
-    }), name='user'),
+    })),
+	
 	
 ]
 
