@@ -1,24 +1,28 @@
 from django.contrib import admin
-from account.models import User, Patient, Physiotherapist
+from .models import User, Patient, Physiotherapist
+
 
 class PatientInline(admin.TabularInline):
     model = Patient
 
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'is_superuser', 'role')
+
     def __str__(self):
         return self.username
+
 
 @admin.register(Physiotherapist)
 class PhysiotherapistAdmin(admin.ModelAdmin):
     list_display = ('username', 'get_patients', 'get_patients_number')
     readonly_fields = ('get_patients',)
-    inlines = [PatientInline]  
+    inlines = [PatientInline]
 
     def username(self, obj):
         return obj.user.username
-    
+
     def get_patients(self, obj):
         patients = obj.patients.all()
         return ", ".join([patient.user.username for patient in patients])
@@ -41,8 +45,10 @@ class PhysiotherapistAdmin(admin.ModelAdmin):
     def __str__(self):
         return self.user.username
 
+
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('user', 'physiotherapist', )
+    list_display = ('user', 'physiotherapist',)
+
     def __str__(self):
         return self.user.username

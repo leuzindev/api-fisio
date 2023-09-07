@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from .models import Plan
+from .serializers import PlanSerializer
 
-# Create your views here.
+
+class PlanViewSet(viewsets.ModelViewSet):
+    queryset = Plan.objects.all()
+    serializer_class = PlanSerializer
+    permission_classes = (IsAuthenticated,)
