@@ -1,12 +1,9 @@
-from django.shortcuts import render
-
 from rest_framework import viewsets
-from account.serializers import UserSerializer
-from account.models import User
+from .serializers import UserSerializer
+from .models import User
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import  generics, viewsets
+from rest_framework import generics, viewsets
 from django.shortcuts import get_object_or_404
-
 
 
 class UserViewSet(viewsets.ModelViewSet):
