@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import User, Patient, Physiotherapist
 
-
 class PatientInline(admin.TabularInline):
     model = Patient
 
@@ -48,7 +47,10 @@ class PhysiotherapistAdmin(admin.ModelAdmin):
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('user', 'physiotherapist',)
+    list_display = ('username', 'user', 'physiotherapist',)
+
+    def username(self, obj):
+        return obj.user.username
 
     def __str__(self):
         return self.user.username

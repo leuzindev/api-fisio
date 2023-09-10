@@ -100,7 +100,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ],
     )
 
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'role']
 
@@ -119,6 +118,27 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super().save(*args, **kwargs)
+
+            if self.role == self.PATIENT:
+                Patient.objects.create(user=self)
+            elif self.role == self.PHYSIOTHERAPIST:
+                Physiotherapist.objects.create(user=self)
+        else:
+            old_role = User.objects.get(pk=self.pk).role
+
+            if self.role != old_role:
+                if old_role == self.PATIENT:
+                    self.patient.delete()
+                    Physiotherapist.objects.create(user=self)
+                elif old_role == self.PHYSIOTHERAPIST:
+                    self.physiotherapist.delete()
+                    Patient.objects.create(user=self)
+
+        super().save(*args, **kwargs)
 
 
 class Physiotherapist(models.Model):
