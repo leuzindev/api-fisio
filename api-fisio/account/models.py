@@ -6,6 +6,7 @@ from django.core import validators
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+
 class UserManager(BaseUserManager):
     def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
@@ -16,6 +17,7 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=email, is_staff=is_staff, is_active=True, is_superuser=is_superuser,
                           last_login=now, date_joined=now, **extra_fields)
         user.set_password(password)
+
         user.save(using=self._db)
         return user
 
@@ -138,7 +140,9 @@ class User(AbstractBaseUser, PermissionsMixin):
                     self.physiotherapist.delete()
                     Patient.objects.create(user=self)
 
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
+
+
 
 
 class Physiotherapist(models.Model):

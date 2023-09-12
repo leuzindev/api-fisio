@@ -13,12 +13,9 @@ urlpatterns = [
         'put': 'update',
     })),
     path('accounts/professionals', ProfessionalViewSet.as_view({
-        'get': 'list',
-        'post': 'create'
+         'get': 'list',
+         'post': 'create'
     })),
-    path('accounts/professionals/<int:pk>', ProfessionalViewSet.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-    })),
+    # path('accounts/professionals/<int:pk>', ProfessionalRetrieveAPIView.as_view()),
 ]
 

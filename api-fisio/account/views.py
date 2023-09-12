@@ -29,3 +29,5 @@ class ProfessionalViewSet(viewsets.ModelViewSet):
     queryset = Physiotherapist.objects.all()
     serializer_class = ProfessionalSerializer
     permission_classes = (IsAuthenticated,)
+
+
