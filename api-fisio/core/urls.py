@@ -10,8 +10,8 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/', include([
-        path('', include('account.urls')),
-        path('', include('plan.urls'))
+        path('', include('account.urls'), name='account'),
+        path('', include('plan.urls'), name='plan')
     ]))
 ]
 

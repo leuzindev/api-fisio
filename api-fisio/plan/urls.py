@@ -10,6 +10,7 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'
-    }))
+    })),
+    #path('plans/<int:pk>',)
 
 ]

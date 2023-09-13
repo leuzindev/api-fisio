@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import UserViewSet, UserMeRetrieveAPIView
+from .views import UserViewSet, UserMeRetrieveAPIView, ProfessionalViewSet
 
 urlpatterns = [
     path('accounts/me', UserMeRetrieveAPIView.as_view()),
@@ -12,5 +12,10 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
     })),
+    path('accounts/professionals', ProfessionalViewSet.as_view({
+         'get': 'list',
+         'post': 'create'
+    })),
+    # path('accounts/professionals/<int:pk>', ProfessionalRetrieveAPIView.as_view()),
 ]
 
