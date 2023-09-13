@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import UserViewSet, UserMeRetrieveAPIView, ProfessionalViewSet
+from .views import UserViewSet, UserMeRetrieveAPIView, PhysiotherapistSerializerViewSet, PatientSerializerViewSet
 
 urlpatterns = [
     path('accounts/me', UserMeRetrieveAPIView.as_view()),
@@ -12,10 +12,16 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
     })),
-    path('accounts/professionals', ProfessionalViewSet.as_view({
-         'get': 'list',
-         'post': 'create'
+
+    path('accounts/professionals', PhysiotherapistSerializerViewSet.as_view({
+        'get': 'list',
+        'post': 'create'
     })),
-    # path('accounts/professionals/<int:pk>', ProfessionalRetrieveAPIView.as_view()),
+    path('accounts/patients', PatientSerializerViewSet.as_view({
+        'get': 'list',
+        'post': 'create'
+    })),
+
+
 ]
 

@@ -1,5 +1,5 @@
-from .serializers import UserSerializer, ProfessionalSerializer
-from .models import User, Physiotherapist
+from .serializers import UserSerializer, PhysiotherapistSerializer, PatientSerializer
+from .models import User, Physiotherapist, Patient
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, viewsets
 from django.shortcuts import get_object_or_404
@@ -25,9 +25,13 @@ class UserMeRetrieveAPIView(generics.RetrieveAPIView):
         return obj
 
 
-class ProfessionalViewSet(viewsets.ModelViewSet):
+class PhysiotherapistSerializerViewSet(viewsets.ModelViewSet):
     queryset = Physiotherapist.objects.all()
-    serializer_class = ProfessionalSerializer
+    serializer_class = PhysiotherapistSerializer
     permission_classes = (IsAuthenticated,)
 
+class PatientSerializerViewSet(viewsets.ModelViewSet):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    permission_classes = (IsAuthenticated,)
 
