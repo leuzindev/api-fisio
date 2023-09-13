@@ -1,11 +1,29 @@
+from typing import Dict, Any
+
 from rest_framework import serializers
 from .models import User, Physiotherapist
 
 
 class UserSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        user = User.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        username = data.pop('username')
+        data: dict[str, Any | None] = {'id': data['id'], 'username': username, **data}
+
+        return data
     class Meta:
         model = User
-        fields = '__all__'
+        exclude = ['password', 'user_permissions', 'groups']
 
 
 class ProfessionalSerializer(serializers.ModelSerializer):
