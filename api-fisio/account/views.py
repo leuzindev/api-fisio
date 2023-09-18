@@ -30,8 +30,8 @@ class PhysiotherapistSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = PhysiotherapistSerializer
     permission_classes = (IsAuthenticated,)
 
+
 class PatientSerializerViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     permission_classes = (IsAuthenticated,)
-

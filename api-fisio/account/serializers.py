@@ -6,7 +6,8 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             email=validated_data['email'],
-            username=validated_data['username']
+            username=validated_data['username'],
+            role=validated_data['role'],
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -19,10 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
         data = {'id': data['id'], 'username': username, **data}
 
         return data
+
     class Meta:
         model = User
-        exclude = ['password', 'user_permissions', 'groups']
-
+        exclude = ['user_permissions', 'groups']
+        extra_kwargs = {'password': {'write_only': True}}
 
 
 class PhysiotherapistSerializer(serializers.ModelSerializer):
@@ -44,6 +46,7 @@ class PhysiotherapistSerializer(serializers.ModelSerializer):
             'phone_number': user.phone_number,
             'is_superuser': user.is_superuser,
         }
+
 
 class PatientSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()

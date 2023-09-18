@@ -11,6 +11,5 @@ urlpatterns = [
         'put': 'update',
         'delete': 'destroy'
     })),
-    #path('plans/<int:pk>',)
 
 ]
