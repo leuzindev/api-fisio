@@ -17,4 +17,19 @@ class UserTestCase(TestCase):
         self.assertEqual(user.role, 2)
         self.assertTrue(user.physiotherapist)
 
-    # def test_switch_relation_on_new_role(self):
+    def test_switch_relation_on_new_role(self):
+        user = make_user({'role': 1})
+        self.assertEqual(user.role, 1)
+        self.assertTrue(user.patient)
+
+        user.role = 2
+        user.save()
+
+        self.assertEqual(user.role, 2)
+        self.assertTrue(user.physiotherapist)
+
+        user.role = 1
+        user.save()
+
+        self.assertEqual(user.role, 1)
+        self.assertTrue(user.patient)
