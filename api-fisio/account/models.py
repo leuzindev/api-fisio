@@ -87,7 +87,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=PATIENT
     )
     avatar = models.ImageField(
-        blank=True
+        blank=True,
+        null=True,
     )
     phone_number = models.CharField(
         max_length=16,
