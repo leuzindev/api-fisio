@@ -36,6 +36,12 @@ class Exercise(models.Model):
     description = models.TextField()
     plans = models.ManyToManyField(Plan)
 
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True
+    )
+
     class Meta:
         verbose_name = _('exercise')
         verbose_name_plural = _('exercises')

@@ -9,6 +9,8 @@ class ExerciseVideoSerializer(serializers.ModelSerializer):
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
+    created_by = serializers.StringRelatedField(source='created_by.username')
+
     videos = ExerciseVideoSerializer(
         many=True,
         source='exercisevideo_set',
@@ -17,7 +19,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ['id', 'name', 'description', 'videos']
+        fields = ['id', 'name', 'description', 'created_by', 'videos']
 
 
 class PlanSerializer(serializers.ModelSerializer):

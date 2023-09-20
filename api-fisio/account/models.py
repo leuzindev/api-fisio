@@ -87,6 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=PATIENT
     )
     avatar = models.ImageField(
+        upload_to="profile_pics/",
         blank=True,
         null=True,
     )

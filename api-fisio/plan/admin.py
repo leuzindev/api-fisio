@@ -9,7 +9,7 @@ class ExerciseInline(admin.TabularInline):
 @admin.register(Plan)
 class PlanAdmin(admin.ModelAdmin):
     inlines = (ExerciseInline,)
-    list_display = ('id', 'title', 'get_custom_short_description', 'created_at', 'updated_at')
+    list_display = ('title', 'get_custom_short_description', 'created_at', 'updated_at')
 
     def get_custom_short_description(self, obj):
         description = obj.description
@@ -26,11 +26,11 @@ class PlanAdmin(admin.ModelAdmin):
 
 @admin.register(Exercise)
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name',)
+    list_display = ('name',)
 
 
 @admin.register(ExerciseVideo)
 class ExerciseVideoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name',)
+    list_display = ('name',)
 
 
