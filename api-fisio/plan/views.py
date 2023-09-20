@@ -10,6 +10,7 @@ from .serializers import PlanSerializer, ExerciseVideoSerializer, ExerciseSerial
 
 
 class PlanListSerializer(serializers.ModelSerializer):
+    permission_classes = (IsAuthenticated,)
     created_by = serializers.ReadOnlyField(source='created_by.username')
 
     class Meta:
@@ -33,6 +34,7 @@ class PlanViewSet(viewsets.ModelViewSet):
 
 class PatientPlanView(generics.ListCreateAPIView):
     serializer_class = PlanSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         patient_username = self.kwargs['patient_username']
@@ -46,6 +48,7 @@ class PatientPlanView(generics.ListCreateAPIView):
 
 class PatientPlanDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlanSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         patient_username = self.kwargs['patient_username']
@@ -54,6 +57,7 @@ class PatientPlanDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class UploadVideoAPI(CreateAPIView):
     serializer_class = ExerciseVideoSerializer
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         exercise_id = kwargs.get('exercise_id')
@@ -74,7 +78,6 @@ class UploadVideoAPI(CreateAPIView):
 
         video_name = request.FILES['video_file'].name
 
-        # Crie o vídeo associado ao exercício
         video = ExerciseVideo.objects.create(
             name=video_name,
             video_file=request.FILES['video_file'],
@@ -90,6 +93,4 @@ class ExerciseViewSet(viewsets.ModelViewSet):
     serializer_class = ExerciseSerializer
     permission_classes = (IsAuthenticated,)
 
-class ExerciseVideoDetailAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = ExerciseVideo.objects.all()
-    serializer_class = ExerciseVideoSerializer
+
