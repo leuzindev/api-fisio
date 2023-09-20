@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import Plan
+from .models import Plan, Exercise, ExerciseVideo
 
+
+class ExerciseInline(admin.TabularInline):
+    model = Plan.exercise_set.through
+    extra = 1
 
 @admin.register(Plan)
 class PlanAdmin(admin.ModelAdmin):
+    inlines = (ExerciseInline,)
     list_display = ('title', 'get_custom_short_description', 'created_at', 'updated_at')
 
     def get_custom_short_description(self, obj):
@@ -17,3 +22,15 @@ class PlanAdmin(admin.ModelAdmin):
 
     def __str__(self):
             return self.title
+
+
+@admin.register(Exercise)
+class ExerciseAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(ExerciseVideo)
+class ExerciseVideoAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
