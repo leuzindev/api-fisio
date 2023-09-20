@@ -29,3 +29,8 @@ class PlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plan
         fields = ['id', 'created_by', 'title', 'description', 'exercise_set']
+
+
+class AddExerciseToPlanSerializer(serializers.Serializer):
+    plan_id = serializers.IntegerField()
+    exercise_id = serializers.IntegerField()

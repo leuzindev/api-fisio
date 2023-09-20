@@ -5,8 +5,10 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import serializers
 
+from django.shortcuts import get_object_or_404
+
 from .models import Plan, ExerciseVideo, Exercise
-from .serializers import PlanSerializer, ExerciseVideoSerializer, ExerciseSerializer
+from .serializers import PlanSerializer, ExerciseVideoSerializer, ExerciseSerializer, AddExerciseToPlanSerializer
 
 
 class PlanListSerializer(serializers.ModelSerializer):
@@ -96,3 +98,20 @@ class ExerciseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
+class AddExerciseToPlanAPIView(CreateAPIView):
+    serializer_class = AddExerciseToPlanSerializer
+
+    def create(self, request, *args, **kwargs):
+        plan_id = kwargs.get('plan_id')
+        exercise_id = kwargs.get('exercise_id')
+
+        plan = get_object_or_404(Plan, id=plan_id)
+        exercise = get_object_or_404(Exercise, id=exercise_id)
+
+        plan.exercise_set.add(exercise)
+
+        return Response(
+            {'message': 'Exercício vinculado ao plano com sucesso.'},
+            status=status.HTTP_201_CREATED
+        )
