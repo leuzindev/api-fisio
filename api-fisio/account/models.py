@@ -139,6 +139,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Physiotherapist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscription = models.ForeignKey(
+        'subscription.Subscription',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='physiotherapist'
+    )
 
     def __str__(self):
         return self.user.username
