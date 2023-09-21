@@ -1,6 +1,14 @@
 from django.urls import path
 
-from .views import UserViewSet, UserMeRetrieveAPIView, PhysiotherapistSerializerViewSet, PatientSerializerViewSet
+from .views import (
+    UserViewSet,
+    UserMeRetrieveAPIView,
+    PhysiotherapistSerializerViewSet,
+    PatientSerializerViewSet,
+    PhysiotherapistPatientsListAPIView,
+    AddPatientToPhysiotherapistAPIView,
+    RemovePatientFromPhysiotherapistAPIView
+)
 
 urlpatterns = [
     path('accounts/me', UserMeRetrieveAPIView.as_view()),
@@ -21,7 +29,12 @@ urlpatterns = [
         'get': 'list',
         'post': 'create'
     })),
-
+    path('accounts/professional/<int:pk>/patients/',
+         PhysiotherapistPatientsListAPIView.as_view()
+         ),
+    path('accounts/professional/<int:physiotherapist_id>/add_patient/<int:patient_id>/',
+         AddPatientToPhysiotherapistAPIView.as_view()),
+    path('accounts/professional/<int:physiotherapist_id>/remove_patient/<int:patient_id>/',
+         RemovePatientFromPhysiotherapistAPIView.as_view()),
 
 ]
-

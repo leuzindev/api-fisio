@@ -42,7 +42,6 @@ class PhysiotherapistSerializer(serializers.ModelSerializer):
             'email': user.email,
             'first_name': user.first_name,
             'last_name': user.last_name,
-            'avatar': user.avatar,
             'phone_number': user.phone_number,
             'is_superuser': user.is_superuser,
         }
@@ -57,13 +56,13 @@ class PatientSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         user = obj.user
+
         return {
             'id': user.id,
             'username': user.username,
             'email': user.email,
             'first_name': user.first_name,
             'last_name': user.last_name,
-            'avatar': user.avatar,
             'phone_number': user.phone_number,
             'is_superuser': user.is_superuser,
         }
