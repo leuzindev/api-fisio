@@ -54,3 +54,4 @@ class PatientAdmin(admin.ModelAdmin):
 
     def __str__(self):
         return self.user.username
+

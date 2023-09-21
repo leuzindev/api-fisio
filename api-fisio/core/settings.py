@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account',
     'plan',
-    'core'
+    'admin_honeypot',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +107,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
