@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account',
     'plan',
-    'admin_honeypot'
+    'admin_honeypot',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

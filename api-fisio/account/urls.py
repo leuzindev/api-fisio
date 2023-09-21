@@ -3,8 +3,8 @@ from django.urls import path
 from .views import (
     UserViewSet,
     UserMeRetrieveAPIView,
-    PhysiotherapistSerializerViewSet,
-    PatientSerializerViewSet,
+    PhysiotherapistViewSet,
+    PatientViewSet,
     PhysiotherapistPatientsListAPIView,
     AddPatientToPhysiotherapistAPIView,
     RemovePatientFromPhysiotherapistAPIView
@@ -21,11 +21,11 @@ urlpatterns = [
         'put': 'update',
     })),
 
-    path('accounts/professionals', PhysiotherapistSerializerViewSet.as_view({
+    path('accounts/professionals', PhysiotherapistViewSet.as_view({
         'get': 'list',
         'post': 'create'
     })),
-    path('accounts/patients', PatientSerializerViewSet.as_view({
+    path('accounts/patients', PatientViewSet.as_view({
         'get': 'list',
         'post': 'create'
     })),

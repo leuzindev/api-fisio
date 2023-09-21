@@ -26,13 +26,13 @@ class UserMeRetrieveAPIView(generics.RetrieveAPIView):
         return obj
 
 
-class PhysiotherapistSerializerViewSet(viewsets.ModelViewSet):
+class PhysiotherapistViewSet(viewsets.ModelViewSet):
     queryset = Physiotherapist.objects.all()
     serializer_class = PhysiotherapistSerializer
     permission_classes = (IsAuthenticated,)
 
 
-class PatientSerializerViewSet(viewsets.ModelViewSet):
+class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
     permission_classes = (IsAuthenticated,)
