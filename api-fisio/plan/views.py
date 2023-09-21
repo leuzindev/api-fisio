@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -114,4 +114,20 @@ class AddExerciseToPlanAPIView(CreateAPIView):
         return Response(
             {'message': 'Exercício vinculado ao plano com sucesso.'},
             status=status.HTTP_201_CREATED
+        )
+
+
+class RemoveExerciseFromPlanAPIView(DestroyAPIView):
+    def delete(self, request, *args, **kwargs):
+        plan_id = kwargs.get('plan_id')
+        exercise_id = kwargs.get('exercise_id')
+
+        plan = get_object_or_404(Plan, id=plan_id)
+        exercise = get_object_or_404(Exercise, id=exercise_id)
+
+        plan.exercise_set.remove(exercise)
+
+        return Response(
+            {'message': 'Exercício removido do plano com sucesso.'},
+            status=status.HTTP_204_NO_CONTENT
         )

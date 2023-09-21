@@ -5,7 +5,8 @@ from .views import (
     PatientPlanDetailView,
     UploadVideoAPI,
     ExerciseViewSet,
-    AddExerciseToPlanAPIView
+    AddExerciseToPlanAPIView,
+    RemoveExerciseFromPlanAPIView
 )
 
 urlpatterns = [
@@ -32,5 +33,6 @@ urlpatterns = [
     })),
     path('exercises/<int:exercise_id>/upload_video', UploadVideoAPI.as_view()),
     path('plans/<int:plan_id>/add_exercise/<int:exercise_id>/', AddExerciseToPlanAPIView.as_view()),
+    path('plans/<int:plan_id>/remove_exercise/<int:exercise_id>/', RemoveExerciseFromPlanAPIView.as_view()),
 
 ]
