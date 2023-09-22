@@ -1,14 +1,13 @@
 from django.contrib import admin
 from .models import User, Patient, Physiotherapist
 
-
 class PatientInline(admin.TabularInline):
     model = Patient
-
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'is_superuser', 'role')
+    list_filter = ['role']
 
     def __str__(self):
         return self.username
@@ -48,7 +47,11 @@ class PhysiotherapistAdmin(admin.ModelAdmin):
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('user', 'physiotherapist',)
+    list_display = ('username', 'user', 'physiotherapist',)
+
+    def username(self, obj):
+        return obj.user.username
 
     def __str__(self):
         return self.user.username
+

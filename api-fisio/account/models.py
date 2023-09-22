@@ -28,6 +28,12 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def get_professionals(self):
+        return self.filter(role=User.PHYSIOTHERAPIST)
+
+    def get_patients(self):
+        return self.filter(role=User.PATIENT)
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     PATIENT = 1
@@ -41,7 +47,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('username'),
         max_length=15,
         unique=True,
-        help_text=_('Required. 15 characters or fewer. Letters, numbers and @/./+/-/_ characters'),
         validators=[
             validators.RegexValidator(
                 re.compile('^[\w.@+-]+$'),
@@ -66,13 +71,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
-        help_text=_('Designates whether the user can log into this admin site.')
     )
     is_active = models.BooleanField(
         _('active'),
         default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
     )
 
     date_joined = models.DateTimeField(
@@ -84,9 +86,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=USER_ROLES,
         default=PATIENT
     )
-    avatar = models.CharField(
-        max_length=255,
-        blank=True
+    avatar = models.ImageField(
+        upload_to="profile_pics/",
+        blank=True,
+        null=True,
     )
     phone_number = models.CharField(
         max_length=16,
@@ -100,29 +103,58 @@ class User(AbstractBaseUser, PermissionsMixin):
         ],
     )
 
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'role']
-
-    objects = UserManager()
 
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
-    def get_full_name(self):
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        return self.first_name
-
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super().save(*args, **kwargs)
+
+            if self.role == self.PATIENT:
+                Patient.objects.create(user=self)
+            elif self.role == self.PHYSIOTHERAPIST:
+                Physiotherapist.objects.create(user=self)
+        else:
+            old_role = User.objects.get(pk=self.pk).role
+
+            if self.role != old_role:
+                if old_role == self.PATIENT:
+                    self.patient.delete()
+                    Physiotherapist.objects.create(user=self)
+                elif old_role == self.PHYSIOTHERAPIST:
+                    self.physiotherapist.delete()
+                    Patient.objects.create(user=self)
+
+            super().save(*args, **kwargs)
+
 
 class Physiotherapist(models.Model):
+    FREE = 1
+    BRONZE = 2
+    SILVER = 3
+    GOLD = 4
+    SUBSCRIPTIONS_TYPES = (
+        (FREE, 'Gratis'),
+        (BRONZE, 'Bronze'),
+        (SILVER, 'Prata'),
+        (GOLD, 'Ouro'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscription_type = models.PositiveSmallIntegerField(
+        'Subscription',
+        choices=SUBSCRIPTIONS_TYPES,
+        default=FREE
+    )
 
     def __str__(self):
         return self.user.username
