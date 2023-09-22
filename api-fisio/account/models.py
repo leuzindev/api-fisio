@@ -138,7 +138,23 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Physiotherapist(models.Model):
+    FREE = 1
+    BRONZE = 2
+    SILVER = 3
+    GOLD = 4
+    SUBSCRIPTIONS_TYPES = (
+        (FREE, 'Gratis'),
+        (BRONZE, 'Bronze'),
+        (SILVER, 'Prata'),
+        (GOLD, 'Ouro'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscription_type = models.PositiveSmallIntegerField(
+        'Subscription',
+        choices=SUBSCRIPTIONS_TYPES,
+        default=FREE
+    )
 
     def __str__(self):
         return self.user.username
