@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import User, Physiotherapist, Patient
 
 
@@ -32,7 +33,7 @@ class PhysiotherapistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Physiotherapist
-        fields = ['user']
+        fields = ['user', 'subscription_type']
 
     def get_user(self, obj):
         user = obj.user
@@ -44,6 +45,7 @@ class PhysiotherapistSerializer(serializers.ModelSerializer):
             'last_name': user.last_name,
             'phone_number': user.phone_number,
             'is_superuser': user.is_superuser,
+
         }
 
 

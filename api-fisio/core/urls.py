@@ -2,23 +2,22 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Fisio API",
-      default_version='v1',
-      description="Api para a aplicacao de fisioterapia",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="leonardoc.soares08@gmail.com"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="Fisio API",
+        default_version='v1',
+        description="Api para a aplicacao de fisioterapia",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="leonardoc.soares08@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
@@ -30,7 +29,7 @@ urlpatterns = [
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/', include([
         path('', include('account.urls'), name='account'),
-        path('', include('plan.urls'), name='plan')
+        path('', include('plan.urls'), name='plan'),
     ]))
 ]
 

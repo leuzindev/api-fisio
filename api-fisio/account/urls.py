@@ -7,7 +7,8 @@ from .views import (
     PatientViewSet,
     PhysiotherapistPatientsListAPIView,
     AddPatientToPhysiotherapistAPIView,
-    RemovePatientFromPhysiotherapistAPIView
+    RemovePatientFromPhysiotherapistAPIView,
+    UpdatePhysiotherapistSubscriptionView
 )
 
 urlpatterns = [
@@ -36,5 +37,6 @@ urlpatterns = [
          AddPatientToPhysiotherapistAPIView.as_view()),
     path('accounts/professional/<int:physiotherapist_id>/remove_patient/<int:patient_id>/',
          RemovePatientFromPhysiotherapistAPIView.as_view()),
+    path('professional/<int:pk>/subscription/', UpdatePhysiotherapistSubscriptionView.as_view()),
 
 ]

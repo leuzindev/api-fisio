@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account',
     'plan',
-    'subscription',
     'admin_honeypot',
     'drf_yasg',
 ]
